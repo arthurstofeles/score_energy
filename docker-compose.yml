@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  score-energy:
+    container_name: score-energy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8090:8080"
+    command: >
+      bash -c "
+          yarn install
+          yarn serve
+          yarn global add @vue/cli"
+
+networks:
+  default:
+      name: score-energy_front
