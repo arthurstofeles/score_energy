@@ -12,7 +12,7 @@ export default new Vuetify({
         se_green_light: "#00C693",
         se_green: "#00C693",
         se_blue_light: "#3983FC",
-        se_blue_: "#2759AC",
+        se_blue: "#2759AC",
         se_blue_dark: "#0D2346",
       },
     },
