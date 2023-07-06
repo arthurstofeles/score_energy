@@ -18,6 +18,11 @@ const routes = [
     path: "/cadastro",
     component: () =>
       import(/* webpackChunkName: "CadastroPage" */ "@/views/CadastroPage.vue"),
+  },
+  {
+    path: "/questionario",
+    component: () =>
+      import(/* webpackChunkName: "QuestionarioPage" */ "@/views/QuestionarioPage.vue"),
   }
 ];
 
