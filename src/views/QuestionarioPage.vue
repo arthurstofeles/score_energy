@@ -1,12 +1,7 @@
 <template>
   <div class="questionario se_blue_dark">
     <v-container>
-      <router-link to="/">
-        <img
-          class="mb-4"
-          src="@/assets/logo-score-energy.svg"
-          alt="Logo ScoreEnergy"
-      /></router-link>
+      <HeaderMobile :links="links" />
       <FormularioQuestionario />
       <AlertError :alertError="error" :messageError="message" />
     </v-container>
@@ -15,9 +10,24 @@
 
 <script>
 import FormularioQuestionario from "@/components/questionario-page/Formulario.vue";
+import HeaderMobile from "@/components/custom/HeaderMobile.vue";
 export default {
   name: "QuestionarioPage",
-  components: { FormularioQuestionario },
+  components: { FormularioQuestionario, HeaderMobile },
+  data: () => ({
+    links: [
+      {
+        title: "REFAZER SCORE",
+        route: "",
+        children: [],
+      },
+            {
+        title: "FINALIZAR ANÁLISE",
+        route: "",
+        children: [],
+      },
+    ],
+  }),
 };
 </script>
 
