@@ -27,7 +27,7 @@
 </template>
 
 <script>
-// import { login, recuperarSenha } from "@/utils/services.js";
+import { login, recuperarSenha } from "@/utils/services.js";
 import AlertError from "@/components/custom/AlertError";
 import AlertSuccess from "@/components/custom/AlertSuccess";
 import FormularioLogin from "@/components/login-page/Formulario.vue";
@@ -56,38 +56,39 @@ export default {
     this.isMobile = window.innerWidth <= 768;
   },
   methods: {
-    async logar() {
-      // this.loading = true;
-      // this.error = false;
-      // try {
-      //   await login(event).then((resp) => {
-      //     this.loading = false;
-      //     this.$router.push({ path: "/simulador" });
-      //     window.localStorage.token = `Bearer ${resp.token}`;
-      //     this.$store.dispatch("setLoggedIn", "logado");
-      //   });
-      // } catch (err) {
-      //   this.error = true;
-      //   this.loading = false;
-      //   console.error(err);
-      // }
+    async logar(event) {
+      this.loading = true;
+      this.error = false;
+      try {
+        await login(event).then((resp) => {
+          this.loading = false;
+          this.$router.push({ path: "/questionario" });
+          window.localStorage.token = `Bearer ${resp.token}`;
+          // this.$store.dispatch("setLoggedIn", "logado");
+        });
+      } catch (err) {
+        this.error = true;
+        this.loading = false;
+        console.error(err);
+      }
     },
     async recuperar() {
-      // this.sucess = false;
-      // this.loadingModal = true;
-      // this.error = false;
-      // try {
-      //   await recuperarSenha(event).then(() => {
-      //     this.loadingModal = false;
-      //     this.sucess = true;
-      //     this.message = "Verifique seu e-mail e segua os próximos passos";
-      //   });
-      // } catch (err) {
-      //   this.loadingModal = false;
-      //   this.formModal = false;
-      //   this.error = true;
-      //   console.error(err);
-      // }
+      this.sucess = false;
+      this.loadingModal = true;
+      this.error = false;
+      try {
+        await recuperarSenha(event).then(() => {
+          this.loadingModal = false;
+          this.formModal = false;
+          this.sucess = true;
+          this.message = "Verifique seu e-mail e segua os próximos passos";
+        });
+      } catch (err) {
+        this.loadingModal = false;
+        this.formModal = false;
+        this.error = true;
+        console.error(err);
+      }
     },
   },
 };

@@ -24,28 +24,46 @@
             avaliar o seu consumo de energia
           </h2>
           <v-form class="pt-8 pb-4" ref="form" v-model="valid" lazy-validation>
-            <div>
-              <div class="white pa-4 rounded-lg input-card">
-                <h3 class="se_blue_dark--text mb-4">
-                  Você tem ar-condicionado na sua empresa?
-                </h3>
-                <v-select
-                  v-model="formData.resposta"
-                  :items="listaTipos"
-                  :rules="[(v) => !!v || 'Este campo é obrigatório']"
-                  label="Resposta"
-                  placeholder="Resposta"
-                  required
-                  color="se_green_light"
-                  item-color="se_green_light"
-                ></v-select>
-              </div>
-              <div class="dica">
-                <h4 class="text-uppercase">Dica</h4>
-                <p class="caption">
-                  DICA Norem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Norem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
+            <div v-for="(question, index) in questions" :key="question.id">
+              <div class="mb-8" v-if="checkConditional(question)">
+                <div class="white pa-4 rounded-lg input-card">
+                  <h3 class="se_blue_dark--text mb-4">
+                    {{ question.title }}
+                  </h3>
+                  <v-select
+                    v-if="question.input_type === 'select_box'"
+                    v-model="formData.respostas[index].answer"
+                    :items="question.answers"
+                    :rules="[(v) => !!v || 'Este campo é obrigatório']"
+                    label="Resposta"
+                    placeholder="Resposta"
+                    required
+                    color="se_green_light"
+                    item-color="se_green_light"
+                    item-text="title"
+                    item-value="id"
+                    return-object
+                  ></v-select>
+                  <v-radio-group
+                    v-model="formData.respostas[index].answer"
+                    v-if="question.input_type === 'radio_button'"
+                  >
+                    <v-radio
+                      v-for="option in question.answers"
+                      :key="option.id"
+                      :label="option.title"
+                      :value="option"
+                    ></v-radio>
+                  </v-radio-group>
+                </div>
+                <!-- <div class="dica">
+                  <h4 class="text-uppercase">Dica</h4>
+                  <p class="caption">
+                    DICA Norem ipsum dolor sit amet, consectetur adipiscing
+                    elit. Norem ipsum dolor sit amet, consectetur adipiscing
+                    elit.
+                  </p>
+                </div> -->
               </div>
             </div>
             <v-btn
@@ -68,14 +86,54 @@
 <script>
 export default {
   name: "FormularioQuestionario",
+  props: {
+    questions: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data: () => ({
     formData: {
       nome: null,
-      resposta: null,
+      respostas: [],
     },
     listaTipos: ["Padaria", "Mercado", "Farmacia"],
     genericRules: [(v) => !!v || "Esse campo é obrigatório"],
+    valid: true,
+    loading: false,
   }),
+  created() {
+    this.questions.forEach((question) => {
+      this.formData.respostas.push({
+        id: question.id,
+        title: question.title,
+        answer: "",
+      });
+    });
+  },
+  methods: {
+    send() {
+      console.log(this.formData);
+      // this.$emit("calcular", this.formData);
+    },
+    checkConditional(question) {
+      if (question.is_conditional) {
+        const conditionalQuestion = this.questions.findIndex(
+          (e) => e.id === question.question_conditional.id
+        );
+        const sameAnswer =
+          this.formData.respostas[conditionalQuestion].answer.id ===
+          question.answer_conditional.id;
+        if (sameAnswer) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+  },
 };
 </script>
 

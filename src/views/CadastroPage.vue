@@ -7,7 +7,7 @@
       <FormularioCriarConta @criar="cadastrar" :loading="loading" />
       <AlertError :alertError="error" :messageError="message" />
       <AlertSuccess
-        :dialog="true"
+        :dialog="sucess"
         :dialogMessage="message"
         dialogTextButton="Realizar Login"
         @close="$router.push({ name: 'Login' })"

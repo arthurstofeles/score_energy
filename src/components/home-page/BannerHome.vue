@@ -26,6 +26,7 @@
         color="se_green_light"
         elevation="2"
         large
+        to="/cadastro"
         >Avalie seu consumo</v-btn
       >
     </v-container>
