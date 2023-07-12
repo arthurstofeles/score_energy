@@ -46,14 +46,8 @@ export default {
   }),
   beforeCreate() {
     if (this.$store.state.loggedIn === "logado") {
-      this.$router.push({ path: "/simulador" });
+      this.$router.push({ path: "/questionario" });
     }
-  },
-  created() {
-    window.addEventListener("resize", () => {
-      this.isMobile = window.innerWidth <= 768;
-    });
-    this.isMobile = window.innerWidth <= 768;
   },
   methods: {
     async logar(event) {

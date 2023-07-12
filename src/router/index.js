@@ -20,6 +20,11 @@ const routes = [
       import(/* webpackChunkName: "CadastroPage" */ "@/views/CadastroPage.vue"),
   },
   {
+    path: "/nova-senha",
+    component: () =>
+      import(/* webpackChunkName: "NovaSenhaPage" */ "@/views/NovaSenhaPage.vue"),
+  },
+  {
     path: "/questionario",
     component: () =>
       import(/* webpackChunkName: "QuestionarioPage" */ "@/views/QuestionarioPage.vue"),

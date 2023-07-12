@@ -2,14 +2,17 @@
   <div class="questionario se_blue_dark">
     <v-container>
       <HeaderMobile :links="links" />
-      <FormularioQuestionario :questions="questions" v-if="questions.length > 0" />
+      <FormularioQuestionario
+        :questions="questions"
+        v-if="questions.length > 0"
+      />
       <AlertError :alertError="error" :messageError="message" />
     </v-container>
   </div>
 </template>
 
 <script>
-import { perguntasScore } from "@/utils/services.js"
+import { perguntasScore } from "@/utils/services.js";
 import AlertError from "@/components/custom/AlertError";
 import FormularioQuestionario from "@/components/questionario-page/Formulario.vue";
 import HeaderMobile from "@/components/custom/HeaderMobile.vue";
@@ -23,7 +26,7 @@ export default {
         route: "",
         children: [],
       },
-            {
+      {
         title: "FINALIZAR ANÁLISE",
         route: "",
         children: [],
@@ -31,18 +34,19 @@ export default {
     ],
     error: false,
     message: "Ocorreu um erro inesperado",
-    questions: []
+    questions: [],
   }),
   created() {
     this.getPerguntas();
   },
   methods: {
     async getPerguntas() {
-      const perguntas =  await perguntasScore();7
-      this.questions = perguntas.results
-      console.log(perguntas.results)
-    }
-  }
+      const perguntas = await perguntasScore();
+      7;
+      this.questions = perguntas.results;
+      console.log(perguntas.results);
+    },
+  },
 };
 </script>
 
