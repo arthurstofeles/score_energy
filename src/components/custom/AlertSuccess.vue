@@ -2,14 +2,14 @@
   <v-dialog :value="dialog" width="auto" persistent>
     <v-card>
       <v-card-title class="d-flex justify-center flex-column">
-        <v-icon x-large color="#370EA3" class="mb-6">mdi-check-circle-outline</v-icon>
+        <v-icon x-large color="se_blue" class="mb-6">mdi-check-circle-outline</v-icon>
         <span class="mb-2 text-center">{{ dialogMessage }}</span>
       </v-card-title>
       <v-card-actions class="d-flex justify-center">
         <v-btn
           rounded
-          class="enviar sedig_green--text px-8"
-          color="#370EA3"
+          class="enviar se_green_light--text px-8"
+          color="se_blue"
           @click="$emit('close')"
           >{{ dialogTextButton }}</v-btn
         >

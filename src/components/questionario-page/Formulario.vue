@@ -88,7 +88,7 @@ export default {
 .input-card {
   box-shadow: -15px 15px 0px 0px rgba(0, 198, 149, 1);
   position: relative;
-  z-index: 9;
+  z-index: 1;
 }
 .dica {
   background: #3983fc;
