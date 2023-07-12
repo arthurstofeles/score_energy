@@ -14,7 +14,9 @@
               dark
             ></v-text-field>
             <div class="text-center rounded-circle score" elevation="2">
-              <p class="mb-0 display-1 font-weight-medium white--text">50</p>
+              <p class="mb-0 display-1 font-weight-medium white--text">
+                {{ calculateSocre() }}
+              </p>
               <p class="mb-0 caption se_green_light--text">score</p>
             </div>
           </div>
@@ -25,7 +27,7 @@
           </h2>
           <v-form class="pt-8 pb-4" ref="form" v-model="valid" lazy-validation>
             <div v-for="(question, index) in questions" :key="question.id">
-              <div class="mb-8" v-if="checkConditional(question)">
+              <div class="mb-8" v-if="checkConditional(question, index)">
                 <div class="white pa-4 rounded-lg input-card">
                   <h3 class="se_blue_dark--text mb-4">
                     {{ question.title }}
@@ -93,6 +95,7 @@ export default {
     },
   },
   data: () => ({
+    score: 0,
     formData: {
       nome: null,
       respostas: [],
@@ -116,7 +119,7 @@ export default {
       console.log(this.formData);
       // this.$emit("calcular", this.formData);
     },
-    checkConditional(question) {
+    checkConditional(question, index) {
       if (question.is_conditional) {
         const conditionalQuestion = this.questions.findIndex(
           (e) => e.id === question.question_conditional.id
@@ -127,11 +130,22 @@ export default {
         if (sameAnswer) {
           return true;
         } else {
+          this.formData.respostas[index].answer = ''
           return false;
         }
       } else {
         return true;
       }
+    },
+    calculateSocre() {
+      let total = 0;
+      for (let i = 0; i < this.formData.respostas.length; i++) {
+        if (this.formData.respostas[i].answer.weight) {
+          total += this.formData.respostas[i].answer.weight;
+        }
+      }
+      console.log(total);
+      return total;
     },
   },
 };

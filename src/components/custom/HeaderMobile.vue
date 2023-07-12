@@ -4,7 +4,7 @@
       <img
         src="@/assets/logo-score-energy.svg"
         alt="Logo"
-        @click="goToRoute('HomePage')"
+        @click="goToRoute('/')"
       />
       <v-icon @click.stop="drawer = !drawer" color="white">mdi-menu</v-icon>
     </header>
@@ -76,11 +76,12 @@ export default {
     drawer: false,
   }),
   methods: {
-    goToRoute(route) {
-      this.$router.push({ name: route });
+    goToRoute(path) {
+      this.$router.push({ path: path });
     },
     logout() {
-      this.$emit("logout");
+      this.$store.dispatch("setLoggedIn", "deslogado");
+      this.$router.push({ path: "/" });
     },
   },
   computed: {
@@ -98,6 +99,9 @@ export default {
   justify-content: space-between;
   background-color: transparent;
   padding: 16px;
+  img {
+    cursor: pointer;
+  }
 }
 .nav {
   ul {

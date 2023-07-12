@@ -31,11 +31,10 @@ export default {
     sucess: false,
     message: "Ocorreu um erro inesperado.",
   }),
-  created() {
-    window.addEventListener("resize", () => {
-      this.isMobile = window.innerWidth <= 768;
-    });
-    this.isMobile = window.innerWidth <= 768;
+  beforeCreate() {
+    if (this.$store.state.loggedIn === "logado") {
+      this.$router.push({ path: "/questionario" });
+    }
   },
   methods: {
     async cadastrar(event) {

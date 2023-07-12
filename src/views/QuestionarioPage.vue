@@ -42,7 +42,6 @@ export default {
   methods: {
     async getPerguntas() {
       const perguntas = await perguntasScore();
-      7;
       this.questions = perguntas.results;
       console.log(perguntas.results);
     },

@@ -12,7 +12,7 @@
             </p>
             <v-form ref="form" v-model="valid" lazy-validation class="mt-6">
               <v-text-field
-                v-model="formData.email"
+                v-model="formData.username"
                 label="E-mail"
                 required
                 :rules="emailRules"
@@ -73,7 +73,7 @@ export default {
   },
   data: () => ({
     formData: {
-      email: "",
+      username: "",
       password: "",
     },
     showPassword: false,

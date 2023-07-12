@@ -58,7 +58,7 @@ export default {
           this.loading = false;
           this.$router.push({ path: "/questionario" });
           window.localStorage.token = `Bearer ${resp.token}`;
-          // this.$store.dispatch("setLoggedIn", "logado");
+          this.$store.dispatch("setLoggedIn", "logado");
         });
       } catch (err) {
         this.error = true;

@@ -38,6 +38,11 @@
 <script>
 export default {
   name: "ObrigadoPage",
+    beforeCreate() {
+    if (this.$store.state.loggedIn === "deslogado" || !this.$store.state.thanks) {
+      this.$router.push({ path: "/login" });
+    }
+  },
 };
 </script>
 
