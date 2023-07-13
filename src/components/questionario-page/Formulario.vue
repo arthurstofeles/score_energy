@@ -36,10 +36,9 @@
                     v-if="question.input_type === 'select_box'"
                     v-model="formData.respostas[index].answer"
                     :items="question.answers"
-                    :rules="[(v) => !!v || 'Este campo é obrigatório']"
+                    :rules="genericRules"
                     label="Resposta"
                     placeholder="Resposta"
-                    required
                     color="se_green_light"
                     item-color="se_green_light"
                     item-text="title"
@@ -47,6 +46,8 @@
                     return-object
                   ></v-select>
                   <v-radio-group
+                    :rules="genericRules"
+                    required
                     v-model="formData.respostas[index].answer"
                     v-if="question.input_type === 'radio_button'"
                   >
@@ -58,14 +59,12 @@
                     ></v-radio>
                   </v-radio-group>
                 </div>
-                <!-- <div class="dica">
+                <div class="dica" v-if="formData.respostas[index].answer.tip">
                   <h4 class="text-uppercase">Dica</h4>
                   <p class="caption">
-                    DICA Norem ipsum dolor sit amet, consectetur adipiscing
-                    elit. Norem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
+                    {{ formData.respostas[index].answer.tip }}
                   </p>
-                </div> -->
+                </div>
               </div>
             </div>
             <v-btn
@@ -93,6 +92,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => ({
     score: 0,
@@ -100,10 +103,8 @@ export default {
       nome: null,
       respostas: [],
     },
-    listaTipos: ["Padaria", "Mercado", "Farmacia"],
     genericRules: [(v) => !!v || "Esse campo é obrigatório"],
-    valid: true,
-    loading: false,
+    valid: false,
   }),
   created() {
     this.questions.forEach((question) => {
@@ -115,9 +116,14 @@ export default {
     });
   },
   methods: {
+    validate() {
+      this.$refs.form.validate();
+    },
     send() {
-      console.log(this.formData);
-      // this.$emit("calcular", this.formData);
+      if (this.formValid) {
+        const payload = this.formatPayload();
+        this.$emit("calcular", payload);
+      }
     },
     checkConditional(question, index) {
       if (question.is_conditional) {
@@ -130,7 +136,7 @@ export default {
         if (sameAnswer) {
           return true;
         } else {
-          this.formData.respostas[index].answer = ''
+          this.formData.respostas[index].answer = "";
           return false;
         }
       } else {
@@ -144,8 +150,25 @@ export default {
           total += this.formData.respostas[i].answer.weight;
         }
       }
-      console.log(total);
       return total;
+    },
+    formatPayload() {
+      const result = [];
+      this.formData.respostas.forEach((resposta) => {
+        if (resposta.answer) {
+          result.push(`${resposta.title}: ${resposta.answer.title}`);
+        }
+      });
+      const stringResult = result.join('; ');
+      return {
+        score: this.calculateSocre(),
+        result: stringResult,
+      };
+    },
+  },
+  computed: {
+    formValid() {
+      return this.$refs.form.validate();
     },
   },
 };

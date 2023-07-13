@@ -10,11 +10,7 @@ const headers = {
 const success = (res) => res;
 
 const error = (err) => {
-  if (err.response.status === 401) {
-    window.location = "/login";
-  } else {
-    return Promise.reject(err);
-  }
+  return Promise.reject(err);
 };
 
 export const apiInstance = axios.create({

@@ -5,6 +5,8 @@
       <FormularioQuestionario
         :questions="questions"
         v-if="questions.length > 0"
+        @calcular="setResultado"
+        :loading="loadingBtn"
       />
       <AlertError :alertError="error" :messageError="message" />
     </v-container>
@@ -12,7 +14,7 @@
 </template>
 
 <script>
-import { perguntasScore } from "@/utils/services.js";
+import { perguntasScore, resultadoScore } from "@/utils/services.js";
 import AlertError from "@/components/custom/AlertError";
 import FormularioQuestionario from "@/components/questionario-page/Formulario.vue";
 import HeaderMobile from "@/components/custom/HeaderMobile.vue";
@@ -35,7 +37,13 @@ export default {
     error: false,
     message: "Ocorreu um erro inesperado",
     questions: [],
+    loadingBtn: false,
   }),
+  beforeCreate() {
+    if (this.$store.state.loggedIn === "deslogado") {
+      this.$router.push({ path: "/login" });
+    }
+  },
   created() {
     this.getPerguntas();
   },
@@ -43,7 +51,20 @@ export default {
     async getPerguntas() {
       const perguntas = await perguntasScore();
       this.questions = perguntas.results;
-      console.log(perguntas.results);
+    },
+    async setResultado(payload) {
+      this.error = false;
+      this.loadingBtn = true;
+      try {
+        await resultadoScore(payload).then(() => {
+          this.loadingBtn = false;
+          this.$store.dispatch("setThanks", true);
+          this.$router.push({ path: "/obrigado" });
+        });
+      } catch (e) {
+        this.loadingBtn = false;
+        this.error = true;
+      }
     },
   },
 };

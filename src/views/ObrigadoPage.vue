@@ -25,6 +25,7 @@
                 class="enviar se_green_light--text mt-6"
                 color="se_blue_dark"
                 block
+                to="/"
                 >Ok</v-btn
               >
             </div>

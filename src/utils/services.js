@@ -16,17 +16,17 @@ export const recuperarSenha = async (payload) => {
   return data;
 };
 
-// export const novaSenha = async (payload) => {
-//   const { data } = await apiInstance.post(ENDPOINTS.NOVA_SENHA, payload);
-//   return data;
-// };
+export const novaSenha = async (payload) => {
+  const { data } = await apiInstance.post(ENDPOINTS.NOVA_SENHA, payload);
+  return data;
+};
 
 export const perguntasScore = async (payload) => {
   const { data } = await apiInstance.get(ENDPOINTS.QUESTIONS, payload);
   return data;
 };
 
-// export const resultadoScore = async (payload) => {
-//   const { data } = await apiInstance.post(ENDPOINTS.RESULT, payload);
-//   return data;
-// };
+export const resultadoScore = async (payload) => {
+  const { data } = await apiInstance.post(ENDPOINTS.RESULT, payload);
+  return data;
+};
