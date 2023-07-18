@@ -12,13 +12,17 @@ export default new Vuex.Store({
         ? Vue.$cookies.get("loggedIn")
         : "deslogado",
     thanks: false,
+    simulate: null,
   },
   mutations: {
     SET_LOOGEDIN(state, payload) {
       (state.loggedIn = payload), Vue.$cookies.set("loggedIn", state.loggedIn);
     },
     SET_THANKS(state, payload) {
-      (state.thanks = payload);
+      state.thanks = payload;
+    },
+    SET_SIMULATE(state, payload) {
+      state.simulate = payload;
     },
   },
   actions: {
@@ -27,6 +31,9 @@ export default new Vuex.Store({
     },
     setThanks(context, payload) {
       context.commit("SET_THANKS", payload);
+    },
+    setSimulate(context, payload) {
+      context.commit("SET_SIMULATE", payload);
     },
   },
   modules: {},

@@ -25,12 +25,12 @@ export default {
     links: [
       {
         title: "REFAZER SCORE",
-        route: "",
+        route: "/",
         children: [],
       },
       {
         title: "FINALIZAR ANÁLISE",
-        route: "",
+        route: "/",
         children: [],
       },
     ],

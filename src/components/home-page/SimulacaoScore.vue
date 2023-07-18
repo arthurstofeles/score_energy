@@ -6,11 +6,11 @@
           <div class="d-flex justify-space-between">
             <h2>Simule o seu Score</h2>
             <div
-              class="text-center rounded-circle se_green_light px-6 py-4 score"
+              class="text-center rounded-circle se_green_light score"
               elevation="2"
             >
-              <p class="mb-0 display-2 font-weight-medium se_blue_dark--text">
-                50
+              <p class="mb-0 font-weight-medium se_blue_dark--text">
+                {{ impactoNoScore().toFixed(2) }}
               </p>
               <p class="mb-0 caption">score</p>
             </div>
@@ -20,11 +20,15 @@
               v-model="formData.tipo"
               :items="listaTipos"
               :rules="[(v) => !!v || 'Este campo é obrigatório']"
+              item-text="estabelecimento"
+              item-value="media"
               label="Categoria"
               placeholder="Selecione o tipo de comércio"
               required
               color="se_green_light"
               item-color="se_green_light"
+              @click="impactoNoScore()"
+              return-object
             ></v-select>
             <v-subheader class="pl-0 mb-6">
               Faturamento Médio / Mês
@@ -32,9 +36,9 @@
             <v-slider
               persistent-hint
               v-model="formData.faturamento"
-              :max="20"
+              :max="1000"
               :min="0"
-              step="0.5"
+              step="10"
               ticks="always"
               tick-size="1"
               color="se_green_light"
@@ -54,9 +58,9 @@
             <v-slider
               persistent-hint
               v-model="formData.consumo"
-              :max="20"
+              :max="1000"
               :min="0"
-              step="0.5"
+              step="10"
               ticks="always"
               tick-size="1"
               color="se_green_light"
@@ -74,6 +78,7 @@
               color="se_blue"
               elevation="2"
               large
+              @click="simular"
               >Avalie seu consumo</v-btn
             >
           </v-form>
@@ -89,12 +94,74 @@ export default {
   data: () => ({
     valid: false,
     formData: {
-      tipo: null,
-      faturamento: null,
-      consumo: null,
+      tipo: {
+        estabelecimento: "Bares e Restaurantes",
+        media: 0.15,
+        impacto: 75,
+      },
+      faturamento: 1000,
+      consumo: 130,
     },
-    listaTipos: ["Padaria", "Mercado", "Farmacia"],
+    listaTipos: [
+      {
+        estabelecimento: "Bares e Restaurantes",
+        media: 0.15,
+        impacto: 75,
+      },
+      {
+        estabelecimento: "Mercados",
+        media: 0.1,
+        impacto: 53,
+      },
+      {
+        estabelecimento: "Lojas e Comércio Varejista",
+        media: 0.08,
+        impacto: 32,
+      },
+      {
+        estabelecimento: "Escritório",
+        media: 0.03,
+        impacto: 10,
+      },
+    ],
   }),
+  methods: {
+    impactoNoScore() {
+      if (
+        this.consumoFaturamento > this.formData.tipo.media * 0.8 &&
+        this.consumoFaturamento <= this.formData.tipo.media * 1
+      ) {
+        return 100 - [100 * (this.consumoFaturamento * 0.5)];
+      } else if (
+        this.consumoFaturamento > this.formData.tipo.media * 1 &&
+        this.consumoFaturamento <= this.formData.tipo.media * 1.15
+      ) {
+        return 100 - [100 * (this.consumoFaturamento * 0.75)];
+      } else if (
+        this.consumoFaturamento > this.formData.tipo.media * 1.15 &&
+        this.consumoFaturamento <= this.formData.tipo.media * 1.3
+      ) {
+        return 100 - [100 * (this.consumoFaturamento * 0.9)];
+      } else if (this.consumoFaturamento > this.formData.tipo.media * 1.3) {
+        return 100 - [100 * (this.consumoFaturamento * 1.1)];
+      } else {
+        return 100;
+      }
+    },
+    simular() {
+      this.$store.dispatch("setSimulate", {
+        tipo: this.formData.tipo,
+        faturamento: this.formData.faturamento,
+        consumo: this.formData.consumo,
+      });
+      this.$router.push({ path: "/cadastro" });
+    },
+  },
+  computed: {
+    consumoFaturamento() {
+      return this.formData.consumo / this.formData.faturamento;
+    },
+  },
 };
 </script>
 
@@ -109,8 +176,19 @@ export default {
 }
 .score {
   position: absolute;
-  top: -40px;
+  top: -60px;
   right: 12px;
   box-shadow: 0px 11px 10px -3px rgba(0, 0, 0, 0.25);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+}
+.score > p {
+  font-size: 30px;
+  line-height: 1;
 }
 </style>

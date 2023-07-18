@@ -7,7 +7,6 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        /* eslint-disable */
         se_gray: "#D9D9D9",
         se_green_light: "#00C693",
         se_green: "#00C693",
