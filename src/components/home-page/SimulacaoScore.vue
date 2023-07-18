@@ -78,6 +78,7 @@
               color="se_blue"
               elevation="2"
               large
+              :loading="loading"
               @click="simular"
               >Avalie seu consumo</v-btn
             >
@@ -93,6 +94,7 @@ export default {
   name: "SimulacaoScore",
   data: () => ({
     valid: false,
+    loading: false,
     formData: {
       tipo: {
         estabelecimento: "Bares e Restaurantes",
@@ -149,6 +151,7 @@ export default {
       }
     },
     simular() {
+      this.loading = true
       this.$store.dispatch("setSimulate", {
         tipo: this.formData.tipo,
         faturamento: this.formData.faturamento,

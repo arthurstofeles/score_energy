@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div v-if="scoreBar" class="pa-4 se_blue_dark score-bar">
+      <p class="mb-0 se_green_light--text">Score:</p>
+      <h6 class="mb-0 display-1 font-weight-medium white--text">
+        {{
+          calculateSocre().toFixed(2) === "NaN"
+            ? 0
+            : calculateSocre().toFixed(2)
+        }}
+      </h6>
+    </div>
     <v-container class="py-8">
       <v-row class="justify-center">
         <v-col cols="12" sm="8" md="8">
@@ -30,7 +40,67 @@
             avaliar o seu consumo de energia
           </h2>
           <v-form class="pt-8 pb-4" ref="form" v-model="valid" lazy-validation>
-            <div class="white pa-4 rounded-lg input-card">
+            <div class="mb-8 white pa-4 rounded-lg input-card">
+              <div class="mb-8">
+                <v-select
+                  v-model="simuladoData.tipo"
+                  :items="listaTipos"
+                  :rules="[(v) => !!v || 'Este campo é obrigatório']"
+                  item-text="estabelecimento"
+                  item-value="media"
+                  label="Categoria"
+                  placeholder="Selecione o tipo de comércio"
+                  required
+                  color="se_green_light"
+                  item-color="se_green_light"
+                  @click="impactoNoScore()"
+                  return-object
+                ></v-select>
+                <v-subheader class="pl-0 mb-6">
+                  Faturamento Médio / Mês
+                </v-subheader>
+                <v-slider
+                  persistent-hint
+                  v-model="simuladoData.faturamento"
+                  :max="1000"
+                  :min="0"
+                  step="10"
+                  ticks="always"
+                  tick-size="1"
+                  color="se_green_light"
+                  track-color="white"
+                  thumb-color="se_green_light"
+                  thumb-label="always"
+                >
+                  <template v-slot:thumb-label>
+                    <v-icon dark class="caption" large>
+                      {{ simuladoData.faturamento }} k
+                    </v-icon>
+                  </template>
+                </v-slider>
+                <v-subheader class="pl-0 mb-6">
+                  Conta de Luz Média / Mês
+                </v-subheader>
+                <v-slider
+                  persistent-hint
+                  v-model="simuladoData.consumo"
+                  :max="1000"
+                  :min="0"
+                  step="10"
+                  ticks="always"
+                  tick-size="1"
+                  color="se_green_light"
+                  track-color="white"
+                  thumb-color="se_green_light"
+                  thumb-label="always"
+                >
+                  <template v-slot:thumb-label>
+                    <v-icon dark class="caption">
+                      {{ simuladoData.consumo }} k
+                    </v-icon>
+                  </template>
+                </v-slider>
+              </div>
             </div>
             <div v-for="(question, index) in questions" :key="question.id">
               <div class="mb-8" v-if="checkConditional(question, index)">
@@ -113,8 +183,8 @@ export default {
     valid: false,
     simuladoData: {
       tipo: {},
-      faturamento: null,
-      consumo: null,
+      faturamento: 0,
+      consumo: 0,
     },
     listaTipos: [
       {
@@ -138,6 +208,7 @@ export default {
         impacto: 10,
       },
     ],
+    scoreBar: false,
   }),
   created() {
     this.questions.forEach((question) => {
@@ -153,7 +224,10 @@ export default {
       this.simuladoData.faturamento = this.$store.state.simulate.faturamento;
       this.simuladoData.consumo = this.$store.state.simulate.consumo;
     }
-    console.log(this.$store.state.simulate);
+    window.addEventListener("scroll", this.onScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
   },
   methods: {
     validate() {
@@ -191,26 +265,31 @@ export default {
         ? (this.simuladoData.tipo.impacto * this.impactoNoScore()) / 100
         : 0;
       for (let i = 0; i < this.formData.respostas.length; i++) {
-        console.log(this.formData.respostas[i].answer.weight, 'peso')
         if (this.formData.respostas[i].answer.weight !== undefined) {
           respondido += this.formData.respostas[i].answer.weight;
           max += this.formData.respostas[i].maxScore;
         }
       }
-      console.log(respondido)
-      console.log(max)
       return (respondido / max) * 100;
     },
     formatPayload() {
-      const result = [];
+      const result = [
+        `Categoria: ${this.simuladoData.tipo.estabelecimento}`,
+        `Faturamento Médio / Mês: ${this.simuladoData.faturamento}`,
+        `Conta de Luz Média / Mês: ${this.simuladoData.consumo}`,
+      ];
       this.formData.respostas.forEach((resposta) => {
-        if (resposta.answer) {
+        if (resposta.answer && resposta.answer.tip) {
+          result.push(
+            `${resposta.title}: ${resposta.answer.title} - Dica: ${resposta.answer.tip}`
+          );
+        } else if (resposta.answer) {
           result.push(`${resposta.title}: ${resposta.answer.title}`);
         }
       });
       const stringResult = result.join("; ");
       return {
-        score: this.calculateSocre(),
+        score: this.calculateSocre().toFixed(2),
         result: stringResult,
       };
     },
@@ -234,6 +313,13 @@ export default {
         return 100 - [100 * (this.consumoFaturamento * 1.1)];
       } else {
         return 100;
+      }
+    },
+    onScroll() {
+      if (window.top.scrollY > 350) {
+        this.scoreBar = true;
+      } else {
+        this.scoreBar = false;
       }
     },
   },
@@ -283,5 +369,19 @@ export default {
   .container {
     padding: 0px !important;
   }
+}
+.score-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+.score-bar > h6 {
+  font-size: 30px;
+  line-height: 1;
 }
 </style>

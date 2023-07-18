@@ -8,6 +8,13 @@
         @calcular="setResultado"
         :loading="loadingBtn"
       />
+      <div class="d-flex justify-center pt-16" v-else>
+        <v-progress-circular
+          :size="75"
+          indeterminate
+          color="se_green_light"
+        ></v-progress-circular>
+      </div>
       <AlertError :alertError="error" :messageError="message" />
     </v-container>
   </div>
