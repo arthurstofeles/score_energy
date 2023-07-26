@@ -49,14 +49,14 @@ export default {
     #0d2346;
   position: relative;
   z-index: 0;
-  min-height: 400px;
+  min-height: 500px;
 }
 .banner-home::before {
   content: "";
-  height: 386px;
-  width: 164px;
+  height: 100%;
+  width: 360px;
   background-image: url("../../assets/banner-image.png");
-  background-size: auto;
+  background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
   top: 0px;
@@ -67,6 +67,14 @@ export default {
   h1 {
     font-size: 1.6rem;
     line-height: 1.2;
+  }
+  .banner-home {
+    min-height: 400px;
+  }
+  .banner-home::before {
+    height: 386px;
+    width: 164px;
+    background-size: cover;
   }
 }
 </style>

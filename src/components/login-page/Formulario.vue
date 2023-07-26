@@ -6,9 +6,7 @@
           <div class="rounded-xl pa-6 white card">
             <h2 class="se_blue_dark--text mb-4">Entrar</h2>
             <p class="se_blue_dark--text">
-              Norem ipsum dolor sit amet, consectetur adipiscing elit. Norem
-              ipsum dolor sit amet, consectetur adipiscing elit. Norem ipsum
-              dolor sit amet, consectetur adipiscing elit.
+              Registre-se agora e transforme sua relação com a energia! Descubra novas maneiras de economizar. Junte-se a nós!
             </p>
             <v-form ref="form" v-model="valid" lazy-validation class="mt-6">
               <v-text-field

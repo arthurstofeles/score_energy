@@ -5,49 +5,39 @@
         <v-col cols="12" class="mb-10">
           <h2 class="se_green_light--text mb-4">Quem somos</h2>
           <p class="se_green_light--text caption">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque lacinia id elit eget viverra. Praesent maximus ex
-            varius eros tempor, id aliquet augue bibendum.
+            Equipe formada durante a Olimpíada de Inovação da Eletrobrás, conta
+            com profissionais experientes e capacitados da área de energia.
           </p>
         </v-col>
         <div class="colunas">
           <div class="perfil">
             <img
-              src="@/assets/circle.png"
-              alt="Chief Technology Officer (CTO)"
+              src="@/assets/luiz-miranda.png"
+              alt="Luiz Miranda"
             />
             <div>
               <h3>
-                <a href="" target="_blank">Fulano de Tal</a>
+                <a href="https://www.linkedin.com/in/luiz-miranda/" target="_blank">Luiz Miranda</a>
               </h3>
-              <p>Função Profissional da pessoal</p>
+              <!-- <p>Função Profissional da pessoal</p> -->
             </div>
           </div>
           <div class="perfil left">
-            <img src="@/assets/circle.png" alt="Daniel Alves Lara Fernandes" />
+            <img src="@/assets/livia-borges.png" alt="Lívia Calzolari Borges" />
             <div>
               <h3>
-                <a href="" target="_blank">Fulano de Tal</a>
+                <a href="https://www.linkedin.com/in/l%C3%ADvia-calzolari-borges-aba911239/" target="_blank">Lívia Calzolari Borges</a>
               </h3>
-              <p>Função Profissional da pessoal</p>
+              <!-- <p>Função Profissional da pessoal</p> -->
             </div>
           </div>
           <div class="perfil">
-            <img src="@/assets/circle.png" alt="Fausto Pereira Neto" />
+            <img src="@/assets/cassio-hallmann.png" alt="Cássio Hallmann Weyh" />
             <div>
               <h3>
-                <a href="" target="_blank">Fulano de Tal</a>
+                <a href="https://www.linkedin.com/in/cassioweyh/" target="_blank">Cássio Hallmann Weyh</a>
               </h3>
-              <p>Função Profissional da pessoal</p>
-            </div>
-          </div>
-          <div class="perfil left">
-            <img src="@/assets/circle.png" alt="Jesus Carlos da Silva" />
-            <div>
-              <h3>
-                <a href="" target="_blank">Fulano de Tal</a>
-              </h3>
-              <p>Função Profissional da pessoal</p>
+              <!-- <p>Função Profissional da pessoal</p> -->
             </div>
           </div>
         </div>
@@ -66,7 +56,7 @@ export default {
 .quem-somos {
   .colunas {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     gap: 32px;
     width: 100%;

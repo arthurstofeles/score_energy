@@ -15,9 +15,8 @@
                 Obrigado, entraremos em contato com mais informações, ok?
               </h2>
               <p class="se_blue_dark--text">
-                Norem ipsum dolor sit amet, consectetur adipiscing elit. Norem
-                ipsum dolor sit amet, consectetur adipiscing elit. Norem ipsum
-                dolor sit amet, consectetur adipiscing elit.
+                Um e-mail irá chegar na sua ciaxa de entrada com as informações
+                sobre a sua avaliação.
               </p>
               <v-btn
                 x-large
@@ -39,8 +38,11 @@
 <script>
 export default {
   name: "ObrigadoPage",
-    beforeCreate() {
-    if (this.$store.state.loggedIn === "deslogado" || !this.$store.state.thanks) {
+  beforeCreate() {
+    if (
+      this.$store.state.loggedIn === "deslogado" ||
+      !this.$store.state.thanks
+    ) {
       this.$router.push({ path: "/login" });
     }
   },
