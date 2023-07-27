@@ -44,7 +44,7 @@
               color="se_green_light"
               required
               :rules="[(v) => !!v || 'Este campo é obrigatório']"
-              label="Faturamento Médio / Mês"
+              label="Conta de Luz Média / Mês"
               v-model.lazy="formData.consumo"
               v-money="money"
             ></v-text-field>
