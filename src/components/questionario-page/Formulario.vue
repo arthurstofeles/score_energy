@@ -41,7 +41,7 @@
           </h2>
           <v-form class="pt-8 pb-4" ref="form" v-model="valid" lazy-validation>
             <div class="mb-8 white pa-4 rounded-lg input-card">
-              <div class="mb-8">
+              <div class="mb-4">
                 <v-select
                   v-model="simuladoData.tipo"
                   :items="listaTipos"
@@ -56,50 +56,24 @@
                   @click="impactoNoScore()"
                   return-object
                 ></v-select>
-                <v-subheader class="pl-0 mb-6">
-                  Faturamento Médio / Mês
-                </v-subheader>
-                <v-slider
-                  persistent-hint
-                  v-model="simuladoData.faturamento"
-                  :max="1000"
-                  :min="0"
-                  step="10"
-                  ticks="always"
-                  tick-size="1"
+                <v-text-field
+                  ref="inputRef"
                   color="se_green_light"
-                  track-color="white"
-                  thumb-color="se_green_light"
-                  thumb-label="always"
-                >
-                  <template v-slot:thumb-label>
-                    <v-icon dark class="caption" large>
-                      {{ simuladoData.faturamento }} k
-                    </v-icon>
-                  </template>
-                </v-slider>
-                <v-subheader class="pl-0 mb-6">
-                  Conta de Luz Média / Mês
-                </v-subheader>
-                <v-slider
-                  persistent-hint
-                  v-model="simuladoData.consumo"
-                  :max="1000"
-                  :min="0"
-                  step="10"
-                  ticks="always"
-                  tick-size="1"
+                  required
+                  :rules="[(v) => !!v || 'Este campo é obrigatório']"
+                  label="Faturamento Médio / Mês"
+                  v-model.lazy="simuladoData.faturamento"
+                  v-money="money"
+                ></v-text-field>
+                <v-text-field
+                  ref="inputRef"
                   color="se_green_light"
-                  track-color="white"
-                  thumb-color="se_green_light"
-                  thumb-label="always"
-                >
-                  <template v-slot:thumb-label>
-                    <v-icon dark class="caption">
-                      {{ simuladoData.consumo }} k
-                    </v-icon>
-                  </template>
-                </v-slider>
+                  required
+                  :rules="[(v) => !!v || 'Este campo é obrigatório']"
+                  label="Faturamento Médio / Mês"
+                  v-model.lazy="simuladoData.consumo"
+                  v-money="money"
+                ></v-text-field>
               </div>
             </div>
             <div v-for="(question, index) in questions" :key="question.id">
@@ -161,8 +135,10 @@
 </template>
 
 <script>
+import { VMoney } from "v-money";
 export default {
   name: "FormularioQuestionario",
+  directives: { money: VMoney },
   props: {
     questions: {
       type: Array,
@@ -183,8 +159,8 @@ export default {
     valid: false,
     simuladoData: {
       tipo: {},
-      faturamento: 0,
-      consumo: 0,
+      faturamento: '0',
+      consumo: '0',
     },
     listaTipos: [
       {
@@ -209,6 +185,13 @@ export default {
       },
     ],
     scoreBar: false,
+    money: {
+      decimal: ",",
+      thousands: ".",
+      prefix: "R$ ",
+      suffix: "",
+      precision: 2,
+    },
   }),
   created() {
     this.questions.forEach((question) => {
@@ -328,7 +311,13 @@ export default {
       return this.$refs.form.validate();
     },
     consumoFaturamento() {
-      return this.simuladoData.consumo / this.simuladoData.faturamento;
+      const consumo = parseFloat(
+        this.simuladoData.consumo.replace(/[^0-9,-]/g, "").replace(",", ".")
+      );
+      const faturamento = parseFloat(
+        this.simuladoData.faturamento.replace(/[^0-9,-]/g, "").replace(",", ".")
+      );
+      return consumo / faturamento;
     },
   },
 };

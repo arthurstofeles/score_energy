@@ -30,48 +30,24 @@
               @click="impactoNoScore()"
               return-object
             ></v-select>
-            <v-subheader class="pl-0 mb-6">
-              Faturamento Médio / Mês
-            </v-subheader>
-            <v-slider
-              persistent-hint
-              v-model="formData.faturamento"
-              :max="1000"
-              :min="0"
-              step="10"
-              ticks="always"
-              tick-size="1"
+            <v-text-field
+              ref="inputRef"
               color="se_green_light"
-              track-color="white"
-              thumb-color="se_green_light"
-              thumb-label="always"
-            >
-              <template v-slot:thumb-label>
-                <v-icon dark class="caption" large>
-                  {{ formData.faturamento }} k
-                </v-icon>
-              </template>
-            </v-slider>
-            <v-subheader class="pl-0 mb-6">
-              Conta de Luz Média / Mês
-            </v-subheader>
-            <v-slider
-              persistent-hint
-              v-model="formData.consumo"
-              :max="1000"
-              :min="0"
-              step="10"
-              ticks="always"
-              tick-size="1"
+              required
+              :rules="[(v) => !!v || 'Este campo é obrigatório']"
+              label="Faturamento Médio / Mês"
+              v-model.lazy="formData.faturamento"
+              v-money="money"
+            ></v-text-field>
+            <v-text-field
+              ref="inputRef"
               color="se_green_light"
-              track-color="white"
-              thumb-color="se_green_light"
-              thumb-label="always"
-            >
-              <template v-slot:thumb-label>
-                <v-icon dark class="caption"> {{ formData.consumo }} k </v-icon>
-              </template>
-            </v-slider>
+              required
+              :rules="[(v) => !!v || 'Este campo é obrigatório']"
+              label="Faturamento Médio / Mês"
+              v-model.lazy="formData.consumo"
+              v-money="money"
+            ></v-text-field>
             <v-btn
               class="se_green_light--text d-flex mx-auto"
               rounded
@@ -90,8 +66,10 @@
 </template>
 
 <script>
+import { VMoney } from "v-money";
 export default {
   name: "SimulacaoScore",
+  directives: { money: VMoney },
   data: () => ({
     valid: false,
     loading: false,
@@ -101,8 +79,8 @@ export default {
         media: 0.15,
         impacto: 75,
       },
-      faturamento: 1000,
-      consumo: 130,
+      faturamento: '0',
+      consumo: '0',
     },
     listaTipos: [
       {
@@ -126,8 +104,18 @@ export default {
         impacto: 10,
       },
     ],
+    money: {
+      decimal: ",",
+      thousands: ".",
+      prefix: "R$ ",
+      suffix: "",
+      precision: 2,
+    },
   }),
   methods: {
+    validate() {
+      this.$refs.form.validate();
+    },
     impactoNoScore() {
       if (
         this.consumoFaturamento > this.formData.tipo.media * 0.8 &&
@@ -151,18 +139,29 @@ export default {
       }
     },
     simular() {
-      this.loading = true
-      this.$store.dispatch("setSimulate", {
-        tipo: this.formData.tipo,
-        faturamento: this.formData.faturamento,
-        consumo: this.formData.consumo,
-      });
-      this.$router.push({ path: "/cadastro" });
+      if (this.formValid) {
+        this.loading = true;
+        this.$store.dispatch("setSimulate", {
+          tipo: this.formData.tipo,
+          faturamento: this.formData.faturamento,
+          consumo: this.formData.consumo,
+        });
+        this.$router.push({ path: "/cadastro" });
+      }
     },
   },
   computed: {
     consumoFaturamento() {
-      return this.formData.consumo / this.formData.faturamento;
+      const consumo = parseFloat(
+        this.formData.consumo.replace(/[^0-9,-]/g, "").replace(",", ".")
+      );
+      const faturamento = parseFloat(
+        this.formData.faturamento.replace(/[^0-9,-]/g, "").replace(",", ".")
+      );
+      return consumo / faturamento;
+    },
+    formValid() {
+      return this.$refs.form.validate();
     },
   },
 };
