@@ -274,6 +274,7 @@ export default {
       return {
         score: this.calculateSocre().toFixed(2),
         result: stringResult,
+        company: this.formData.nome
       };
     },
     impactoNoScore() {
