@@ -5,39 +5,53 @@
         <v-col cols="12" class="mb-10">
           <h2 class="se_green_light--text mb-4">Quem somos</h2>
           <p class="se_green_light--text caption">
-            Equipe formada durante a Olimpíada de Inovação da Eletrobrás, conta
-            com profissionais experientes e capacitados da área de energia.
+            Um time de especialistas em energia que quer ajudar pequenas e
+            médias empresas a diminuirem seus gastos com a conta de energia
+            através de conhecimento e acesso a oportunidades disponiveis no
+            mercado.
           </p>
         </v-col>
         <div class="colunas">
           <div class="perfil">
-            <img
-              src="@/assets/luiz-miranda.png"
-              alt="Luiz Miranda"
-            />
+            <img src="@/assets/luiz-miranda.png" alt="Luiz Miranda" />
             <div>
               <h3>
-                <a href="https://www.linkedin.com/in/luiz-miranda/" target="_blank">Luiz Miranda</a>
+                <a
+                  href="https://www.linkedin.com/in/luiz-miranda/"
+                  target="_blank"
+                  >Luiz Miranda</a
+                >
               </h3>
-              <!-- <p>Função Profissional da pessoal</p> -->
+              <p>Vice-coordenador do Hub de Inovação UmBUH Eletrobras Chesf</p>
             </div>
           </div>
           <div class="perfil left">
             <img src="@/assets/livia-borges.png" alt="Lívia Calzolari Borges" />
             <div>
               <h3>
-                <a href="https://www.linkedin.com/in/l%C3%ADvia-calzolari-borges-aba911239/" target="_blank">Lívia Calzolari Borges</a>
+                <a
+                  href="https://www.linkedin.com/in/l%C3%ADvia-calzolari-borges-aba911239/"
+                  target="_blank"
+                  >Lívia Calzolari Borges</a
+                >
               </h3>
-              <!-- <p>Função Profissional da pessoal</p> -->
+              <p>Administradora na Eletrobras Eletronorte e Advogada</p>
             </div>
           </div>
           <div class="perfil">
-            <img src="@/assets/cassio-hallmann.png" alt="Cássio Hallmann Weyh" />
+            <img
+              src="@/assets/cassio-hallmann.png"
+              alt="Cássio Hallmann Weyh"
+            />
             <div>
               <h3>
-                <a href="https://www.linkedin.com/in/cassioweyh/" target="_blank">Cássio Hallmann Weyh</a>
+                <a
+                  href="https://www.linkedin.com/in/cassioweyh/"
+                  target="_blank"
+                  >Cássio Hallmann Weyh</a
+                >
               </h3>
-              <!-- <p>Função Profissional da pessoal</p> -->
+              <p>Engenheiro na Eletrobras Eletrosul</p>
             </div>
           </div>
         </div>
@@ -106,7 +120,7 @@ export default {
           color: #00c693;
           font-style: italic;
           font-weight: 300;
-          font-size: 14px;
+          font-size: 12px;
           line-height: 1.4;
           @media screen and (max-width: 768px) {
             font-size: 12px;

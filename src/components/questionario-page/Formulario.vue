@@ -4,9 +4,9 @@
       <p class="mb-0 se_green_light--text">Score:</p>
       <h6 class="mb-0 display-1 font-weight-medium white--text">
         {{
-          calculateSocre().toFixed(2) === "NaN"
+          calculateSocre().toFixed(0) === "NaN"
             ? 0
-            : calculateSocre().toFixed(2)
+            : calculateSocre().toFixed(0)
         }}
       </h6>
     </div>
@@ -26,9 +26,9 @@
             <div class="text-center rounded-circle score" elevation="2">
               <p class="mb-0 font-weight-medium white--text">
                 {{
-                  calculateSocre().toFixed(2) === "NaN"
+                  calculateSocre().toFixed(0) === "NaN"
                     ? 0
-                    : calculateSocre().toFixed(2)
+                    : calculateSocre().toFixed(0)
                 }}
               </p>
               <p class="mb-0 caption se_green_light--text">score</p>

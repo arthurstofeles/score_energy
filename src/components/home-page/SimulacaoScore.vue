@@ -10,7 +10,7 @@
               elevation="2"
             >
               <p class="mb-0 font-weight-medium se_blue_dark--text">
-                {{ impactoNoScore().toFixed(2) }}
+                {{ impactoNoScore().toFixed(0) }}
               </p>
               <p class="mb-0 caption">score</p>
             </div>

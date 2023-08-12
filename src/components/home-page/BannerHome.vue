@@ -9,14 +9,11 @@
             alt="logo-score-energy"
           />
           <h1 class="se_blue--text mb-8">
-            Saiba se você está gastando
-            <span class="se_green_light--text">mais do que deveria</span> com
-            eletricidade
+            Saiba como você pode diminuir
+            <span class="se_green_light--text">seus gastos com a conta de energia</span>
           </h1>
           <h2 class="white--text caption mb-4">
-            Nosso algoritmo exclusivo utiliza um sistema de pontuação para você
-            saber na hora se o seu custo com energia está adequado e se dá para
-            melhorar.
+            Nosso algoritmo exclusivo utiliza um sistema de pontuação para você saber como pode otimizar seu consumo na conta de energia através informação rápida e acessivel.
           </h2>
         </v-col>
       </v-row>
