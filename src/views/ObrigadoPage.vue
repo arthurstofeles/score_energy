@@ -15,7 +15,7 @@
                 Obrigado, entraremos em contato com mais informações, ok?
               </h2>
               <p class="se_blue_dark--text">
-                Um e-mail irá chegar na sua ciaxa de entrada com as informações
+                Um e-mail irá chegar na sua caixa de entrada com as informações
                 sobre a sua avaliação.
               </p>
               <v-btn

@@ -48,7 +48,7 @@
                 <a
                   href="https://www.linkedin.com/in/cassioweyh/"
                   target="_blank"
-                  >Cássio Hallmann Weyh</a
+                  >Cássio Weyh</a
                 >
               </h3>
               <p>Engenheiro na Eletrobras Eletrosul</p>

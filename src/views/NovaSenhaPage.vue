@@ -12,7 +12,7 @@
       <AlertSuccess
         :dialog="sucess"
         :dialogMessage="message"
-        dialogTextButton="REalizarLogin"
+        dialogTextButton="Realizar Login"
         @close="sucess = false"
       />
     </v-container>

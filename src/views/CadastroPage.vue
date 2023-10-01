@@ -2,7 +2,10 @@
   <div class="cadastro se_blue_dark">
     <v-container>
       <router-link to="/">
-        <img class="mb-4" src="@/assets/logo-score-energy.svg" alt="Logo ScoreEnergy"
+        <img
+          class="mb-4"
+          src="@/assets/logo-score-energy.svg"
+          alt="Logo ScoreEnergy"
       /></router-link>
       <FormularioCriarConta @criar="cadastrar" :loading="loading" />
       <AlertError :alertError="error" :messageError="message" />
@@ -10,7 +13,7 @@
         :dialog="sucess"
         :dialogMessage="message"
         dialogTextButton="Realizar Login"
-        @close="$router.push({ name: 'Login' })"
+        @close="logar()"
       />
     </v-container>
   </div>
@@ -38,23 +41,27 @@ export default {
   },
   methods: {
     async cadastrar(event) {
-        this.loading = true;
-        this.sucess = false;
-        this.error = false;
-        try {
-          await criaConta(event).then(() => {
-            this.loading = false;
-            this.sucess = true;
-            this.message = "Cadastro concluído com sucesso!";
-          });
-        } catch (err) {
-          this.error = true;
+      this.loading = true;
+      this.sucess = false;
+      this.error = false;
+      try {
+        await criaConta(event).then(() => {
           this.loading = false;
-          if (err.response.data.detail === "E-mail already registered") {
-            this.message = "Este e-mail já está cadastrado.";
-          }
-          console.error(err);
+          this.sucess = true;
+          this.message = "Cadastro concluído com sucesso!";
+        });
+      } catch (err) {
+        this.error = true;
+        this.loading = false;
+        if (err.response.data.detail === "E-mail already registered") {
+          this.message = "Este e-mail já está cadastrado.";
         }
+        console.error(err);
+      }
+    },
+    logar() {
+      this.sucess = false;
+      this.$router.push({ path: "/login" });
     },
   },
 };
