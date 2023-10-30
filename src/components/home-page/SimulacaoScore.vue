@@ -79,8 +79,8 @@ export default {
         media: 0.15,
         impacto: 75,
       },
-      faturamento: '0',
-      consumo: '0',
+      faturamento: "",
+      consumo: "",
     },
     listaTipos: [
       {
@@ -103,6 +103,11 @@ export default {
         media: 0.03,
         impacto: 10,
       },
+      {
+        estabelecimento: "Outros",
+        media: 0.09,
+        impacto: 32,
+      }
     ],
     money: {
       decimal: ",",
@@ -117,26 +122,84 @@ export default {
       this.$refs.form.validate();
     },
     impactoNoScore() {
-      if (
-        this.consumoFaturamento > this.formData.tipo.media * 0.8 &&
-        this.consumoFaturamento <= this.formData.tipo.media * 1
-      ) {
-        return 100 - [100 * (this.consumoFaturamento * 0.5)];
-      } else if (
-        this.consumoFaturamento > this.formData.tipo.media * 1 &&
-        this.consumoFaturamento <= this.formData.tipo.media * 1.15
-      ) {
-        return 100 - [100 * (this.consumoFaturamento * 0.75)];
-      } else if (
-        this.consumoFaturamento > this.formData.tipo.media * 1.15 &&
-        this.consumoFaturamento <= this.formData.tipo.media * 1.3
-      ) {
-        return 100 - [100 * (this.consumoFaturamento * 0.9)];
-      } else if (this.consumoFaturamento > this.formData.tipo.media * 1.3) {
-        return 100 - [100 * (this.consumoFaturamento * 1.1)];
-      } else {
-        return 100;
+      // if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 0.8 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 0.5)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.15
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 0.75)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1.15 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.3
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 0.9)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1.3 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.45
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 1.1)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1.45 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.6
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 1.3)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1.6 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.8
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 1.45)];
+      // } else if (
+      //   this.consumoFaturamento > this.formData.tipo.media * 1.8 &&
+      //   this.consumoFaturamento <= this.formData.tipo.media * 1.95
+      // ) {
+      //   return 100 - [100 * (this.consumoFaturamento * 1.6)];
+      // } else if (this.consumoFaturamento > this.formData.tipo.media * 1.95) {
+      //   return 100 - [100 * (this.consumoFaturamento * 1.8)];
+      // } else {
+      //   return 100;
+      // }
+
+      const E2 = this.formData.tipo.media;
+      const D5 = this.consumoFaturamento;
+
+      let resultado = 100;
+
+      if (D5 <= E2 * 0.8) {
+        resultado = 100;
+      } else if (D5 <= E2) {
+        resultado = 100 - 100 * D5 * 0.9;
+      } else if (D5 > E2 && D5 < E2 * 1.15) {
+        resultado = 100 - 100 * D5 * 1.15;
+      } else if (D5 >= E2 * 1.15 && D5 < E2 * 1.4) {
+        resultado = 100 - 100 * (D5 * 1.15);
+      } else if (D5 >= E2 * 1.4 && D5 < E2 * 1.65) {
+        resultado = 100 - 100 * (D5 * 1.4);
+      } else if (D5 >= E2 * 1.65 && D5 < E2 * 1.9) {
+        resultado = 100 - 100 * (D5 * 1.65);
+      } else if (D5 >= E2 * 1.9 && D5 < E2 * 2.15) {
+        resultado = 100 - 100 * (D5 * 1.9);
+      } else if (D5 >= E2 * 2.15 && D5 < E2 * 2.4) {
+        resultado = 100 - 100 * (D5 * 2.15);
+      } else if (D5 >= E2 * 2.4 && D5 < E2 * 2.65) {
+        resultado = 100 - 100 * (D5 * 2.4);
+      } else if (D5 >= E2 * 2.65 && D5 < E2 * 2.9) {
+        resultado = 100 - 100 * (D5 * 2.65);
+      } else if (D5 >= E2 * 2.9 && D5 < E2 * 3.15) {
+        resultado = 100 - 100 * (D5 * 2.9);
+      } else if (D5 >= E2 * 3.15 && D5 < E2 * 3.4) {
+        resultado = 100 - 100 * (D5 * 3.15);
+      } else if (D5 >= E2 * 3.4 && D5 < E2 * 3.65) {
+        resultado = 100 - 100 * (D5 * 3.4);
+      } else if (D5 >= E2 * 3.65 && D5 < E2 * 3.9) {
+        resultado = 100 - 100 * (D5 * 3.65);
+      } else if (D5 >= E2 * 3.9) {
+        resultado = 100 - 100 * (D5 * 3.9);
       }
+      return resultado;
     },
     simular() {
       if (this.formValid) {
